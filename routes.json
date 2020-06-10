@@ -1,0 +1,3 @@
+{
+  "/foods\\?filter=:category": "/foods?category=:category"
+}

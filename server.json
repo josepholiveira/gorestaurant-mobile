@@ -1,0 +1,52 @@
+{
+  "foods": [
+    {
+      "id": 1,
+      "name": "Ao molho branco",
+      "description": "Macarrão ao molho branco, fughi e cheiro verde das montanhas.",
+      "price": "19.90",
+      "available": true,
+      "adicionais": [
+        {
+          "name": "bacon",
+          "value": "1.50"
+        }
+      ],
+      "category": "arroz",
+      "image": "https://cdn.discordapp.com/attachments/678946221733445652/713371630369243146/Foto.png"
+    },
+    {
+      "id": 2,
+      "name": "Veggie",
+      "description": "Macarrão com pimentão, ervilha e ervas finas colhidas no himalaia.",
+      "price": "19.90",
+      "available": true,
+      "category": "feijao",
+      "image": "https://www.pizzaexpress.com.my/wp-content/uploads/2017/06/bolognese.png"
+    },
+    {
+      "id": 3,
+      "name": "A la Camarón",
+      "description": "Macarrão com vegetais de primeira linha e camarão dos 7 mares.",
+      "price": "19.90",
+      "available": true,
+      "image": "https://www.pizzaexpress.com.my/wp-content/uploads/2017/06/bolognese.png"
+    },
+    {
+      "image": "Teste",
+      "name": "Teste",
+      "price": "19.90",
+      "description": "Testando",
+      "available": true,
+      "id": 4
+    },
+    {
+      "image": "fdsdf",
+      "name": "sdfsd",
+      "price": "fsdfsd",
+      "description": "sdfs",
+      "available": true,
+      "id": 5
+    }
+  ]
+}
