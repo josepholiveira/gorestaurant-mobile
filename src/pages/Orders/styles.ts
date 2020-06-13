@@ -1,9 +1,5 @@
-import styled, { css } from 'styled-components/native';
+import styled from 'styled-components/native';
 import { FlatList } from 'react-native';
-
-interface CategoryItemProps {
-  isSelected?: boolean;
-}
 
 export const Container = styled.View`
   flex: 1;
@@ -15,71 +11,21 @@ export const Header = styled.View`
   background: #c72828;
 
   display: flex;
-  flex-direction: row;
   align-items: center;
-  justify-content: space-between;
 `;
 
-export const FilterContainer = styled.View`
-  padding: 0 24px;
-  margin-top: -28px;
-`;
-
-export const Title = styled.Text`
+export const HeaderTitle = styled.Text`
+  color: #fff;
   font-family: 'Poppins-Regular';
   font-style: normal;
   font-weight: 600;
-  font-size: 20px;
-  line-height: 30px;
-
-  color: #3d3d4d;
-  padding: 0 20px;
-`;
-
-export const CategoryContainer = styled.View`
-  margin-top: 40px;
-`;
-
-export const CategorySlider = styled.ScrollView`
-  margin-top: 16px;
-`;
-
-export const CategoryItem = styled.TouchableOpacity<CategoryItemProps>`
-  background-color: #f0f0f5;
-  border: 2px;
-  border-color: #f0f0f5;
-  height: 120px;
-  width: 120px;
-  border-radius: 8px;
-  padding-top: 20px;
-  padding-bottom: 16px;
-  margin-right: 8px;
-  align-items: center;
-  justify-content: space-between;
-
-  text-align: center;
-
-  ${props =>
-    props.isSelected &&
-    css`
-      border-color: #c72828;
-      background-color: #ffebeb;
-    `}
-`;
-
-export const CategoryItemTitle = styled.Text`
-  font-style: normal;
-  font-weight: bold;
-  font-size: 15px;
-  line-height: 15px;
-
-  text-align: center;
-
-  color: #6c6c80;
+  font-size: 16px;
+  line-height: 24px;
 `;
 
 export const FoodsContainer = styled.View`
-  margin-top: 40px;
+  flex: 1;
+  margin-top: -60px;
 `;
 
 export const FoodList = styled(FlatList)`
@@ -89,7 +35,7 @@ export const FoodList = styled(FlatList)`
   margin-top: 16px;
 `;
 
-export const Food = styled.TouchableOpacity`
+export const Food = styled.View`
   display: flex;
   flex-direction: row;
 

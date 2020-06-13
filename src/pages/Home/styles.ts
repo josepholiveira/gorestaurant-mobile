@@ -17,7 +17,7 @@ export const Title = styled.Text`
   color: #fff;
   margin-top: 80px;
 
-  width: 239px;
+  width: 250px;
 
   font-family: 'Poppins-Regular';
 `;

@@ -21,7 +21,9 @@ const Home: React.FC = () => {
   const navigation = useNavigation();
 
   async function handleNavigate(): Promise<void> {
-    navigation.navigate('Dashboard');
+    navigation.navigate('MainBottom', {
+      screen: 'Dashboard',
+    });
   }
 
   return (
