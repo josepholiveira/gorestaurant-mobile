@@ -22,12 +22,9 @@ interface InputRef {
   focus(): void;
 }
 
-const Input: React.RefForwardingComponent<InputRef, InputProps> = (
-  { ...rest },
-  ref,
-) => {
-  const inputElementRef = useRef<any>(null);
-
+const Input: React.RefForwardingComponent<InputRef, InputProps> = ({
+  ...rest
+}) => {
   const [isFocused, setIsFocused] = useState(false);
   const [isFilled, setIsFilled] = useState(false);
 
@@ -43,12 +40,6 @@ const Input: React.RefForwardingComponent<InputRef, InputProps> = (
     setIsFilled(!!inputValueRef.current.value);
   }, []);
 
-  useImperativeHandle(ref, () => ({
-    focus() {
-      inputElementRef.current.focus();
-    },
-  }));
-
   return (
     <Container isFocused={isFocused}>
       <Icon
@@ -58,7 +49,6 @@ const Input: React.RefForwardingComponent<InputRef, InputProps> = (
       />
 
       <TextInput
-        ref={inputElementRef}
         placeholder="Qual comida você procura?"
         placeholderTextColor="#B7B7CC"
         onFocus={handleInputFocus}

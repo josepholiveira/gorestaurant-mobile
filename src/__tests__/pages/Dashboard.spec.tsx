@@ -2,8 +2,8 @@
 
 import React from 'react';
 
-import {mocked} from 'ts-jest/utils';
-import {render, fireEvent, act, wait} from '@testing-library/react-native';
+import { mocked } from 'ts-jest/utils';
+import { render, fireEvent, act, wait } from '@testing-library/react-native';
 import AxiosMock from 'axios-mock-adapter';
 import api from '../../services/api';
 
@@ -52,7 +52,7 @@ describe('Dashboard', () => {
       },
     ];
 
-    apiMock.onGet('/foods').reply((config) => {
+    apiMock.onGet('/foods').reply(config => {
       switch (config.params.filter) {
         case 'rice':
           return [200, items];
@@ -69,7 +69,7 @@ describe('Dashboard', () => {
     apiMock.onGet('foods?filter=rice').reply(200, items);
     apiMock.onGet('foods?filter=beans').reply(200, items2);
 
-    const {getByText, getByTestId} = render(<Dashboard />);
+    const { getByText, getByTestId } = render(<Dashboard />);
 
     await wait(() => expect(getByText('Ao molho branco')).toBeTruthy(), {
       timeout: 200,

@@ -1,6 +1,15 @@
 import styled, { css } from 'styled-components/native';
 import { FlatList } from 'react-native';
 
+interface Product {
+  id: number;
+  name: string;
+  description: string;
+  price: number;
+  thumbnail_url: string;
+  formattedPrice: string;
+}
+
 interface CategoryItemProps {
   isSelected?: boolean;
 }
@@ -82,7 +91,7 @@ export const FoodsContainer = styled.View`
   margin-top: 40px;
 `;
 
-export const FoodList = styled(FlatList)`
+export const FoodList = styled(FlatList as new () => FlatList<Product>)`
   flex: 1;
   padding: 0 20px;
 
@@ -92,23 +101,29 @@ export const FoodList = styled(FlatList)`
 export const Food = styled.TouchableOpacity`
   display: flex;
   flex-direction: row;
+  align-items: center;
 
   background: #f0f0f5;
   border-radius: 8px;
 
   margin-bottom: 16px;
 `;
+
 export const FoodImageContainer = styled.View`
   background: #ffb84d;
   border-top-left-radius: 8px;
   border-bottom-left-radius: 8px;
-  padding: 13px;
+  padding: 16px;
+
+  height: 100%;
 `;
+
 export const FoodContent = styled.View`
   flex: 1;
 
   padding: 16px;
 `;
+
 export const FoodTitle = styled.Text`
   font-family: 'Poppins-Regular';
   font-style: normal;
@@ -122,7 +137,7 @@ export const FoodDescription = styled.Text`
   font-family: 'Poppins-Regular';
   font-style: normal;
   font-weight: normal;
-  font-size: 12px;
+  font-size: 10px;
   line-height: 16px;
 
   margin-top: 6px;

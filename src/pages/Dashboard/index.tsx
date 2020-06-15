@@ -1,12 +1,13 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Image, ScrollView } from 'react-native';
 
 import Icon from 'react-native-vector-icons/Feather';
 import { useNavigation } from '@react-navigation/native';
 import Logo from '../../assets/logo-header.png';
-import aoMolho from '../../assets/ao-molho.png';
-import massas from '../../assets/massas.png';
 import SearchInput from '../../components/SearchInput';
+
+import api from '../../services/api';
+import formatValue from '../../utils/formatValue';
 
 import {
   Container,
@@ -27,49 +28,67 @@ import {
   FoodPricing,
 } from './styles';
 
+interface Food {
+  id: number;
+  name: string;
+  description: string;
+  price: number;
+  thumbnail_url: string;
+  formattedPrice: string;
+}
+
+interface Category {
+  id: number;
+  title: string;
+  image_url: string;
+}
+
 const Dashboard: React.FC = () => {
+  const [foods, setFoods] = useState<Food[]>([]);
+  const [categories, setCategories] = useState<Category[]>([]);
+  const [selectedCategory, setSelectedCategory] = useState<
+    number | undefined
+  >();
+  const [searchValue, setSearchValue] = useState('');
+
   const navigation = useNavigation();
 
-  async function handleNavigate(): Promise<void> {
+  async function handleNavigate(id: number): Promise<void> {
     navigation.navigate('FoodDetails', {
-      id: 1,
+      id,
     });
   }
 
-  const products = [
-    {
-      id: 1,
-      name: 'Ao molho branco',
-    },
-    {
-      id: 2,
-      name: 'Veggie',
-    },
-    {
-      id: 3,
-      name: 'Ao molho branco',
-    },
-    {
-      id: 4,
-      name: 'Veggie',
-    },
-    {
-      id: 5,
-      name: 'Ao molho branco',
-    },
-    {
-      id: 6,
-      name: 'Veggie',
-    },
-    {
-      id: 7,
-      name: 'Ao molho branco',
-    },
-    {
-      id: 8,
-      name: 'Veggie',
-    },
-  ];
+  useEffect(() => {
+    async function loadDashboard(): Promise<void> {
+      const foodsResponse = await api.get('/foods', {
+        params: {
+          category_like: selectedCategory,
+          name_like: searchValue,
+        },
+      });
+
+      const categoriesResponse = await api.get('/categories');
+
+      setCategories(categoriesResponse.data);
+      setFoods(
+        foodsResponse.data.map((food: Food) => ({
+          ...food,
+          formattedPrice: formatValue(food.price),
+        })),
+      );
+    }
+
+    loadDashboard();
+  }, [selectedCategory, searchValue]);
+
+  function handleSelectCategory(id: number): void {
+    if (selectedCategory === id) {
+      setSelectedCategory(undefined);
+    } else {
+      setSelectedCategory(id);
+    }
+  }
 
   return (
     <Container>
@@ -83,7 +102,7 @@ const Dashboard: React.FC = () => {
         />
       </Header>
       <FilterContainer>
-        <SearchInput />
+        <SearchInput value={searchValue} onChangeText={setSearchValue} />
       </FilterContainer>
       <ScrollView>
         <CategoryContainer>
@@ -95,52 +114,39 @@ const Dashboard: React.FC = () => {
             horizontal
             showsHorizontalScrollIndicator={false}
           >
-            <CategoryItem
-              // onPress={() => handleSelectItem(item.id)}
-              activeOpacity={0.6}
-            >
-              <Image source={massas} />
-              <CategoryItemTitle>Massas</CategoryItemTitle>
-            </CategoryItem>
-
-            <CategoryItem
-              isSelected
-              // onPress={() => handleSelectItem(item.id)}
-              activeOpacity={0.6}
-            >
-              <Image source={massas} />
-              <CategoryItemTitle>Pizzas</CategoryItemTitle>
-            </CategoryItem>
-            <CategoryItem
-              // onPress={() => handleSelectItem(item.id)}
-              activeOpacity={0.6}
-            >
-              <Image source={massas} />
-              <CategoryItemTitle>Massas</CategoryItemTitle>
-            </CategoryItem>
-            <CategoryItem
-              // onPress={() => handleSelectItem(item.id)}
-              activeOpacity={0.6}
-            >
-              <Image source={massas} />
-              <CategoryItemTitle>Massas</CategoryItemTitle>
-            </CategoryItem>
+            {categories.map(category => (
+              <CategoryItem
+                key={category.id}
+                isSelected={category.id === selectedCategory}
+                onPress={() => handleSelectCategory(category.id)}
+                activeOpacity={0.6}
+              >
+                <Image
+                  style={{ width: 56, height: 56 }}
+                  source={{ uri: category.image_url }}
+                />
+                <CategoryItemTitle>{category.title}</CategoryItemTitle>
+              </CategoryItem>
+            ))}
           </CategorySlider>
         </CategoryContainer>
         <FoodsContainer>
           <Title>Pratos</Title>
           <FoodList
-            data={products}
-            keyExtractor={(item: any) => item.id}
+            data={foods}
+            keyExtractor={item => item.id}
             renderItem={({ item }) => (
-              <Food onPress={() => handleNavigate()} activeOpacity={0.6}>
+              <Food onPress={() => handleNavigate(item.id)} activeOpacity={0.6}>
                 <FoodImageContainer>
-                  <Image style={{ width: 88, height: 88 }} source={aoMolho} />
+                  <Image
+                    style={{ width: 88, height: 88 }}
+                    source={{ uri: item.thumbnail_url }}
+                  />
                 </FoodImageContainer>
                 <FoodContent>
                   <FoodTitle>{item.name}</FoodTitle>
-                  <FoodDescription>Descrição da comida</FoodDescription>
-                  <FoodPricing>R$ 19,90</FoodPricing>
+                  <FoodDescription>{item.description}</FoodDescription>
+                  <FoodPricing>{item.formattedPrice}</FoodPricing>
                 </FoodContent>
               </Food>
             )}

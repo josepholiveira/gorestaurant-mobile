@@ -15,9 +15,15 @@ export const Header = styled.View`
   justify-content: space-between;
 `;
 
-export const FoodsContainer = styled.View`
+export const ScrollContainer = styled.ScrollView.attrs({
+  contentContainerStyle: {
+    paddingBottom: 40,
+  },
+})`
   margin-top: -40px;
+`;
 
+export const FoodsContainer = styled.View`
   padding: 0 24px;
 `;
 
@@ -90,6 +96,7 @@ export const Title = styled.Text`
 
 export const AdditionalsContainer = styled.View`
   padding: 0 24px;
+  margin-top: 16px;
 `;
 
 export const AdittionalItem = styled.View`
@@ -158,6 +165,7 @@ export const QuantityContainer = styled.View`
   background: #f0f0f5;
   border-radius: 8px;
   padding: 10px 15px;
+  margin-top: 25px;
 `;
 
 export const FinishOrderButton = styled.TouchableOpacity`

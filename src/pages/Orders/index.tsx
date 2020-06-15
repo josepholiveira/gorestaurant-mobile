@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Image } from 'react-native';
 
-import aoMolho from '../../assets/ao-molho.png';
+import api from '../../services/api';
+import formatValue from '../../utils/formatValue';
 
 import {
   Container,
@@ -17,17 +18,32 @@ import {
   FoodPricing,
 } from './styles';
 
+interface Food {
+  id: number;
+  name: string;
+  description: string;
+  price: number;
+  formattedValue: number;
+  thumbnail_url: string;
+}
+
 const Orders: React.FC = () => {
-  const products = [
-    {
-      id: 1,
-      name: 'Ao molho branco',
-    },
-    {
-      id: 2,
-      name: 'Veggie',
-    },
-  ];
+  const [orders, setOrders] = useState<Food[]>([]);
+
+  useEffect(() => {
+    async function loadOrders(): Promise<void> {
+      const response = await api.get('/orders');
+
+      setOrders(
+        response.data.map((order: Food) => ({
+          ...order,
+          formattedPrice: formatValue(order.price),
+        })),
+      );
+    }
+
+    loadOrders();
+  }, []);
 
   return (
     <Container>
@@ -37,17 +53,20 @@ const Orders: React.FC = () => {
 
       <FoodsContainer>
         <FoodList
-          data={products}
-          keyExtractor={(item: any) => item.id}
+          data={orders}
+          keyExtractor={item => item.id}
           renderItem={({ item }) => (
-            <Food>
+            <Food key={item.id} activeOpacity={0.6}>
               <FoodImageContainer>
-                <Image style={{ width: 88, height: 88 }} source={aoMolho} />
+                <Image
+                  style={{ width: 88, height: 88 }}
+                  source={{ uri: item.thumbnail_url }}
+                />
               </FoodImageContainer>
               <FoodContent>
                 <FoodTitle>{item.name}</FoodTitle>
-                <FoodDescription>Descrição da comida</FoodDescription>
-                <FoodPricing>R$ 19,90</FoodPricing>
+                <FoodDescription>{item.description}</FoodDescription>
+                <FoodPricing>{item.formattedPrice}</FoodPricing>
               </FoodContent>
             </Food>
           )}
