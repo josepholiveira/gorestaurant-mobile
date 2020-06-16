@@ -7,7 +7,7 @@ import api from '../../services/api';
 
 import FoodDetails from '../../pages/FoodDetails';
 
-jest.mock('../utils/formatValue.ts', () => ({
+jest.mock('../../utils/formatValue.ts', () => ({
   __esModule: true,
   default: jest.fn().mockImplementation((value: number) => {
     switch (value) {
@@ -21,7 +21,7 @@ jest.mock('../utils/formatValue.ts', () => ({
         return 'R$ 21,40';
 
       default:
-        return '';
+        return 'R$ 59,70';
     }
   }),
 }));
