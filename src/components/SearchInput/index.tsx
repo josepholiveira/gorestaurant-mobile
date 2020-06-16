@@ -1,10 +1,4 @@
-import React, {
-  useState,
-  useCallback,
-  useRef,
-  useImperativeHandle,
-  forwardRef,
-} from 'react';
+import React, { useState, useCallback } from 'react';
 
 import { TextInputProps } from 'react-native';
 
@@ -14,21 +8,9 @@ interface InputProps extends TextInputProps {
   name?: string;
 }
 
-interface InputValueReference {
-  value: string;
-}
-
-interface InputRef {
-  focus(): void;
-}
-
-const Input: React.RefForwardingComponent<InputRef, InputProps> = ({
-  ...rest
-}) => {
+const SearchInput: React.FC<InputProps> = ({ value = '', ...rest }) => {
   const [isFocused, setIsFocused] = useState(false);
   const [isFilled, setIsFilled] = useState(false);
-
-  const inputValueRef = useRef<InputValueReference>({ value: '' });
 
   const handleInputFocus = useCallback(() => {
     setIsFocused(true);
@@ -37,8 +19,8 @@ const Input: React.RefForwardingComponent<InputRef, InputProps> = ({
   const handleInputBlur = useCallback(() => {
     setIsFocused(false);
 
-    setIsFilled(!!inputValueRef.current.value);
-  }, []);
+    setIsFilled(!!value);
+  }, [value]);
 
   return (
     <Container isFocused={isFocused}>
@@ -49,14 +31,15 @@ const Input: React.RefForwardingComponent<InputRef, InputProps> = ({
       />
 
       <TextInput
-        placeholder="Qual comida você procura?"
         placeholderTextColor="#B7B7CC"
         onFocus={handleInputFocus}
         onBlur={handleInputBlur}
+        value={value}
+        testID="search-input"
         {...rest}
       />
     </Container>
   );
 };
 
-export default forwardRef(Input);
+export default SearchInput;

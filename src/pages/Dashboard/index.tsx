@@ -102,7 +102,11 @@ const Dashboard: React.FC = () => {
         />
       </Header>
       <FilterContainer>
-        <SearchInput value={searchValue} onChangeText={setSearchValue} />
+        <SearchInput
+          value={searchValue}
+          onChangeText={setSearchValue}
+          placeholder="Qual comida você procura?"
+        />
       </FilterContainer>
       <ScrollView>
         <CategoryContainer>
@@ -120,6 +124,7 @@ const Dashboard: React.FC = () => {
                 isSelected={category.id === selectedCategory}
                 onPress={() => handleSelectCategory(category.id)}
                 activeOpacity={0.6}
+                testID={`category-${category.id}`}
               >
                 <Image
                   style={{ width: 56, height: 56 }}
@@ -134,9 +139,13 @@ const Dashboard: React.FC = () => {
           <Title>Pratos</Title>
           <FoodList
             data={foods}
-            keyExtractor={item => item.id}
+            keyExtractor={item => String(item.id)}
             renderItem={({ item }) => (
-              <Food onPress={() => handleNavigate(item.id)} activeOpacity={0.6}>
+              <Food
+                onPress={() => handleNavigate(item.id)}
+                activeOpacity={0.6}
+                testID={`food-${item.id}`}
+              >
                 <FoodImageContainer>
                   <Image
                     style={{ width: 88, height: 88 }}

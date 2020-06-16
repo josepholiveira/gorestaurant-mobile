@@ -54,7 +54,7 @@ const Orders: React.FC = () => {
       <FoodsContainer>
         <FoodList
           data={orders}
-          keyExtractor={item => item.id}
+          keyExtractor={item => String(item.id)}
           renderItem={({ item }) => (
             <Food key={item.id} activeOpacity={0.6}>
               <FoodImageContainer>
