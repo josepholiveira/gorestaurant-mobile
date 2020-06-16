@@ -1,13 +1,12 @@
 import styled from 'styled-components/native';
 
-export const Container = styled.View`
-  padding: 150px 0px;
-`;
-
 export const BackgroundImage = styled.ImageBackground`
   flex: 1;
-  padding: 0 40px;
+  padding: 40px 40px 0;
+  justify-content: space-around;
 `;
+
+export const Container = styled.View``;
 
 export const Title = styled.Text`
   font-style: normal;

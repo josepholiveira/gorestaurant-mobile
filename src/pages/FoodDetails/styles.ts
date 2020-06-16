@@ -109,7 +109,7 @@ export const AdittionalItem = styled.View`
 
   padding: 10px 15px;
 
-  margin-bottom: 8px;
+  margin-top: 8px;
 `;
 
 export const AdittionalItemText = styled.Text`

@@ -1,14 +1,4 @@
 import styled, { css } from 'styled-components/native';
-import { FlatList } from 'react-native';
-
-interface Product {
-  id: number;
-  name: string;
-  description: string;
-  price: number;
-  thumbnail_url: string;
-  formattedPrice: string;
-}
 
 interface CategoryItemProps {
   isSelected?: boolean;
@@ -91,7 +81,7 @@ export const FoodsContainer = styled.View`
   margin-top: 40px;
 `;
 
-export const FoodList = styled(FlatList as new () => FlatList<Product>)`
+export const FoodList = styled.View`
   flex: 1;
   padding: 0 20px;
 
