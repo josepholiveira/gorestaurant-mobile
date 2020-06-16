@@ -13,15 +13,15 @@ jest.mock('../../utils/formatValue.ts', () => ({
     switch (value) {
       case 19.9:
         return 'R$ 19,90';
-      case 59.7:
-        return 'R$ 59,70';
+      case 39.8:
+        return 'R$ 39,80';
       case 22.9:
         return 'R$ 22,90';
       case 21.4:
         return 'R$ 21,40';
 
       default:
-        return 'R$ 59,70';
+        return '';
     }
   }),
 }));
@@ -147,13 +147,7 @@ describe('Orders', () => {
 
     expect(getByTestId('food-quantity')).toHaveTextContent('2');
 
-    await act(async () => {
-      fireEvent.press(getByTestId('increment-food'));
-    });
-
-    expect(getByTestId('food-quantity')).toHaveTextContent('3');
-
-    expect(getByTestId('cart-total')).toHaveTextContent('R$ 59,70');
+    expect(getByTestId('cart-total')).toHaveTextContent('R$ 39,80');
   });
 
   it('should be able to decrement food quantity', async () => {
