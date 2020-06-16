@@ -441,7 +441,7 @@ describe('Dashboard', () => {
     expect(queryByText('Veggie')).toBeTruthy();
   });
 
-  it('should be able to navigate to another page', async () => {
+  it('should be able to navigate to the food details page', async () => {
     const items = [
       {
         id: 1,

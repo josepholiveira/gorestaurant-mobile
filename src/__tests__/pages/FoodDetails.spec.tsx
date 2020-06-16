@@ -275,7 +275,7 @@ describe('Orders', () => {
     expect(getByTestId('food-quantity')).toHaveTextContent('1');
   });
 
-  it('should be able to increment food quantity', async () => {
+  it('should be able to increment an extra item quantity', async () => {
     const item = {
       id: 1,
       name: 'Ao molho',
