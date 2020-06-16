@@ -7,6 +7,25 @@ import api from '../../services/api';
 
 import FoodDetails from '../../pages/FoodDetails';
 
+jest.mock('../utils/formatValue.ts', () => ({
+  __esModule: true,
+  default: jest.fn().mockImplementation((value: number) => {
+    switch (value) {
+      case 19.9:
+        return 'R$ 19,90';
+      case 59.7:
+        return 'R$ 59,70';
+      case 22.9:
+        return 'R$ 22,90';
+      case 21.4:
+        return 'R$ 21,40';
+
+      default:
+        return '';
+    }
+  }),
+}));
+
 const mockedNavigate = jest.fn();
 
 jest.mock('@react-navigation/native', () => {
